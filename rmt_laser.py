@@ -1,9 +1,6 @@
-# %%
-model_name = "Intel/neural-chat-7b-v3-3"  # Change to your preferred model
-#model_name = "cognitivecomputations/dolphin-2.6-mistral-7b-dpo"  # Change to your preferred model
-
 
 # %%
+import argparse
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import datasets
@@ -11,6 +8,15 @@ from lib.utils import gptq_data_utils
 from tqdm import tqdm
 import random
 import numpy as np
+
+# %% Setup argument parsing
+parser = argparse.ArgumentParser(description='Modify a transformer model.')
+parser.add_argument('model_name', type=str, help='The name of the model to modify.')
+args = parser.parse_args()
+
+# Use the model_name argument to initialize your ModelModifier
+model_name = args.model_name
+
 
 class ModelModifier:
     def __init__(self, model_name):
